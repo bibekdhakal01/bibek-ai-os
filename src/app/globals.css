@@ -1,0 +1,266 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-black: #030408;
+  --color-cyber-blue: #00d2ff;
+  --color-cyber-cyan: #00f5ff;
+  --color-cyber-purple: #8b5cf6;
+  --color-cyber-dim: rgba(0, 210, 255, 0.05);
+  --color-panel-bg: rgba(3, 6, 16, 0.82);
+  --color-panel-border: rgba(0, 245, 255, 0.22);
+
+  --font-orbitron: var(--font-orbitron), sans-serif;
+  --font-share-tech: var(--font-share-tech), monospace;
+  --font-inter: var(--font-inter), sans-serif;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────── */
+
+@keyframes scanline {
+  0%   { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.75; filter: drop-shadow(0 0 6px rgba(0,210,255,0.35)); }
+  50%       { opacity: 1;    filter: drop-shadow(0 0 16px rgba(0,245,255,0.7)); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+@keyframes hud-glitch {
+  0%, 89%, 100% { clip-path: inset(0 0 0 0); transform: none; }
+  90%  { clip-path: inset(18% 0 76% 0); transform: skewX(-2.5deg); }
+  91%  { clip-path: inset(72% 0 14% 0); transform: skewX(3deg);    }
+  92%  { clip-path: inset(40% 0 45% 0); transform: skewX(-2deg);   }
+  93%  { clip-path: inset(8%  0 88% 0); transform: skewX(1.5deg);  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes data-stream {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes border-pulse {
+  0%, 100% { border-color: rgba(0,245,255,0.22); box-shadow: 0 0 0 rgba(0,210,255,0); }
+  50%       { border-color: rgba(0,245,255,0.55); box-shadow: 0 0 20px rgba(0,210,255,0.12); }
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
+
+:root {
+  background-color: var(--color-cyber-black);
+  color-scheme: dark;
+  font-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--color-cyber-black);
+  color: #e2e8f0;
+}
+
+body {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* For labels, HUD readouts, system outputs, etc. */
+.font-mono-hud {
+  font-family: var(--font-share-tech), monospace;
+}
+
+/* ─── Utility Classes ───────────────────────────────────────── */
+
+/* Grid background */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(0,210,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,210,255,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center center;
+}
+
+/* Fine secondary grid */
+.cyber-grid-fine {
+  background-image:
+    linear-gradient(rgba(0,210,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,210,255,0.022) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* Glassmorphism panel with rich cyber gradient */
+.hologram-panel {
+  background: linear-gradient(
+    145deg,
+    rgba(3, 8, 20, 0.88) 0%,
+    rgba(10, 5, 28, 0.78) 50%,
+    rgba(0, 16, 32, 0.75) 100%
+  );
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(0, 245, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(0,245,255,0.1),
+    inset 0 0 25px rgba(0,210,255,0.06),
+    inset 0 0 15px rgba(139,92,246,0.04),
+    0 10px 40px rgba(0, 0, 0, 0.7);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hologram-panel:hover {
+  border-color: rgba(0, 245, 255, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(0,245,255,0.18),
+    inset 0 0 30px rgba(0,210,255,0.1),
+    inset 0 0 20px rgba(139,92,246,0.08),
+    0 12px 45px rgba(0, 0, 0, 0.75),
+    0 0 25px rgba(0,210,255,0.08);
+}
+
+/* Animated border panel */
+.panel-border-pulse {
+  animation: border-pulse 4s ease-in-out infinite;
+}
+
+/* Holographic button */
+.hologram-btn {
+  background: rgba(0, 210, 255, 0.05);
+  border: 1px solid rgba(0, 210, 255, 0.28);
+  color: rgba(0, 210, 255, 0.95);
+  text-shadow: 0 0 6px rgba(0, 210, 255, 0.4);
+  box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.04);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: var(--font-orbitron), sans-serif;
+}
+
+.hologram-btn:hover {
+  background: rgba(0, 210, 255, 0.12);
+  border-color: rgba(0, 255, 255, 0.65);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.8);
+  box-shadow:
+    inset 0 0 15px rgba(0, 210, 255, 0.2),
+    0 0 15px rgba(0, 210, 255, 0.25);
+}
+
+.hologram-btn:active {
+  transform: scale(0.97);
+}
+
+/* Glow text utilities */
+.hologram-text-glow {
+  text-shadow:
+    0 0 6px rgba(0, 210, 255, 0.75),
+    0 0 15px rgba(0, 210, 255, 0.35);
+}
+
+.hologram-text-glow-cyan {
+  text-shadow:
+    0 0 6px rgba(0, 245, 255, 0.95),
+    0 0 18px rgba(0, 245, 255, 0.45);
+}
+
+.hologram-text-glow-white {
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.75),
+    0 0 15px rgba(0, 245, 255, 0.4);
+}
+
+/* Shimmer loader */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(0,210,255,0.05) 0%,
+    rgba(0,245,255,0.18) 50%,
+    rgba(0,210,255,0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Float animation */
+.float-slow {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Clip-path corners with gentle outer round overlays */
+.cyber-corner {
+  clip-path: polygon(
+    0px 0px,
+    calc(100% - 16px) 0px,
+    100% 16px,
+    100% 100%,
+    16px 100%,
+    0px calc(100% - 16px)
+  );
+}
+
+.cyber-corner-sm {
+  clip-path: polygon(
+    0px 0px,
+    calc(100% - 10px) 0px,
+    100% 10px,
+    100% 100%,
+    10px 100%,
+    0px calc(100% - 10px)
+  );
+}
+
+/* Status dot */
+.status-dot-active {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px #22c55e, 0 0 12px rgba(34,197,94,0.4);
+}
+
+/* ─── Scrollbars ────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.35); }
+::-webkit-scrollbar-thumb {
+  background: rgba(0,210,255,0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,245,255,0.6);
+  box-shadow: 0 0 8px rgba(0,245,255,0.5);
+}
+
+/* ─── Responsive typography helpers ────────────────────────── */
+
+.text-hud-xs  { font-family: var(--font-share-tech), monospace; font-size: 13px; letter-spacing: 0.12em; }
+.text-hud-sm  { font-family: var(--font-share-tech), monospace; font-size: 14px; letter-spacing: 0.10em; }
+.text-hud-md  { font-family: var(--font-share-tech), monospace; font-size: 16px; letter-spacing: 0.06em; }
+.text-hud-lg  { font-family: var(--font-share-tech), monospace; font-size: 18px; letter-spacing: 0.04em; }
+
