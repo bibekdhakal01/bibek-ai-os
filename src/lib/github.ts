@@ -3,23 +3,23 @@ import { GithubStats, GithubContribution } from "@/src/types/github";
 export const getMockGithubStats = (): GithubStats => {
   const contributionsGrid: GithubContribution[] = [];
   const today = new Date();
-  
+
   // Generate a grid of 365 days with realistic weights
   for (let i = 364; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(today.getDate() - i);
-    
+
     const dayOfWeek = d.getDay();
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
     const rnd = Math.random();
-    
+
     let count = 0;
     if (isWeekend) {
       count = rnd > 0.80 ? Math.floor(rnd * 3) : 0;
     } else {
       count = rnd > 0.35 ? Math.floor(rnd * 5) : 0;
     }
-    
+
     let level: 0 | 1 | 2 | 3 | 4 = 0;
     if (count === 1) level = 1;
     else if (count === 2 || count === 3) level = 2;
@@ -52,7 +52,7 @@ export const getMockGithubStats = (): GithubStats => {
         stars: 0,
         forks: 0,
         language: "PHP",
-        description: "Full-stack hotel management system with room booking, billing, and admin dashboard. Deployed on Cloudflare Pages.",
+        description: "Full-stack hotel management system with room booking, billing, and admin dashboard. Deployed on vercel.",
         url: "https://github.com/bibekdhakal01/Hamro_Hotel"
       },
       {
@@ -68,7 +68,7 @@ export const getMockGithubStats = (): GithubStats => {
         stars: 0,
         forks: 0,
         language: "CSS / JS",
-        description: "Responsive task manager web app with local persistence. Live on Cloudflare Pages.",
+        description: "Responsive task manager web app with local persistence. Live on Vercel.",
         url: "https://github.com/bibekdhakal01/To-Do-List-App"
       },
       {
